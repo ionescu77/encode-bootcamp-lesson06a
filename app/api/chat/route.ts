@@ -11,7 +11,19 @@ export const runtime = "edge";
 
 export async function POST(req: Request) {
   console.log("POST request received");
-  const { messages } = await req.json();
+
+  const { messages: userMessages } = await req.json();
+
+  const messages = [
+    {
+      role: "system",
+      content:
+        "You are a professional chef firy and funny. \
+        You provide detailed cooking instructions, tips, and advice on selecting the best ingredients. \
+        Reply only in text and max 200 words",
+    },
+    ...userMessages,
+  ];
 
   // Ask OpenAI for a streaming chat completion given the prompt
   const response = await openai.chat.completions.create({
