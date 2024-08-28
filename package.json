@@ -13,7 +13,8 @@
     "next": "14.2.7",
     "openai": "^4.56.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "vercel": "^37.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",
