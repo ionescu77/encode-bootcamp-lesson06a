@@ -1,6 +1,7 @@
 "use client";
 
 import { useChat } from "ai/react";
+import { useEffect, useRef } from "react";
 
 export default function Chat() {
   const {
@@ -11,9 +12,16 @@ export default function Chat() {
     isLoading,
     append,
   } = useChat();
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
   return (
     <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
-      <div className="overflow-auto w-full">
+      <div className="overflow-auto w-full mb-8" ref={messagesContainerRef}>
         {messages.map((m) => (
           <div
             key={m.id}
@@ -33,15 +41,27 @@ export default function Chat() {
           </div>
         )}
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl text-black"
-          value={input}
-          placeholder="Say something..."
-          onChange={handleInputChange}
-        />
-      </form>
+      <div className="fixed bottom-0 w-full max-w-md">
+        <div className="flex flex-col justify-center mb-2 items-center">
+          <button
+            className="bg-blue-500 p-2 text-white rounded shadow-xl"
+            disabled={isLoading}
+            onClick={() =>
+              append({ role: "user", content: "Give me a random recipe" })
+            }
+          >
+            Random Recipe
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="flex justify-center">
+          <input
+            className="w-[95%] p-2 mb-8 border border-gray-300 rounded shadow-xl text-black"
+            value={input}
+            placeholder="Say something..."
+            onChange={handleInputChange}
+          />
+        </form>
+      </div>
     </div>
   );
 }
