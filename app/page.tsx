@@ -6,12 +6,14 @@ export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   return (
     <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
-      {messages.map((m) => (
-        <div key={m.id} className="whitespace-pre-wrap">
-          {m.role === "user" ? "User: " : "AI: "}
-          {m.content}
-        </div>
-      ))}
+      <div className="overflow-auto w-full">
+        {messages.map((m) => (
+          <div key={m.id} className="whitespace-pre-wrap">
+            {m.role === "user" ? "User: " : "AI: "}
+            {m.content}
+          </div>
+        ))}
+      </div>
 
       <form onSubmit={handleSubmit}>
         <input
