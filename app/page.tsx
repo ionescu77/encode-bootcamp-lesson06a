@@ -31,8 +31,21 @@ export default function Chat() {
   // display the image instead of the chat interface when the image is ready
   if (image) {
     return (
-      <div className="flex justify-center gap-4 h-screen">
-        <img src={`data:image/jpeg;base64,${image}`} />
+      <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
+        <div className="mb-4">
+          <img
+            src={`data:image/jpeg;base64,${image}`}
+            alt="Generated image"
+            className="rounded-lg w-full"
+          />
+        </div>
+        <div className="w-full">
+          <textarea
+            className="w-full text-white bg-gray-400 p-3 rounded-lg h-64"
+            value={messages[messages.length - 1].content}
+            readOnly
+          />
+        </div>
       </div>
     );
   }
