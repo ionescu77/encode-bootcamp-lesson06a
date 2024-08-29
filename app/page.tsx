@@ -4,14 +4,7 @@ import { useChat } from "ai/react";
 import { useEffect, useRef } from "react";
 
 export default function Chat() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    append,
-  } = useChat();
+  const { messages, isLoading, append } = useChat();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -53,14 +46,6 @@ export default function Chat() {
             Random Recipe
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="flex justify-center">
-          <input
-            className="w-[95%] p-2 mb-8 border border-gray-300 rounded shadow-xl text-black"
-            value={input}
-            placeholder="Say something..."
-            onChange={handleInputChange}
-          />
-        </form>
       </div>
     </div>
   );
