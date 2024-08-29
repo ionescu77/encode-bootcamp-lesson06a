@@ -35,54 +35,56 @@ export default function Chat() {
   // display the image instead of the chat interface when the image is ready
   if (image) {
     return (
-      <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
-        <div className="mb-4">
-          <Image
-            src={`data:image/jpeg;base64,${image}`}
-            width={500}
-            height={500}
-            alt="Generated image"
-            className="rounded-lg w-full"
-          />
-        </div>
-        <div className="w-full">
-          <textarea
-            className="w-full text-white bg-gray-400 p-3 rounded-lg h-64"
-            value={messages[messages.length - 1].content}
-            readOnly
-          />
-        </div>
-        <div className="flex flex-col justify-center mb-2 items-center">
-          {audio && (
-            <>
-              <p> Listen to the recipe: </p>
-              <audio controls src={audio} className="w-full"></audio>
-            </>
-          )}
-          {audioIsLoading && !audio && <p> Audio is being generated... </p>}
-          {!audioIsLoading && !audio && (
-            <button
-              className="bg-blue-500 p-2 text-white rounded shadow-xl"
-              onClick={async () => {
-                setAudioIsLoading(true); // change state to true
-                const response = await fetch("/api/audio", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    message: messages[messages.length - 1].content,
-                  }),
-                });
-                const audioBlob = await response.blob();
-                const audioUrl = URL.createObjectURL(audioBlob);
-                setAudio(audioUrl);
-                setAudioIsLoading(false); // change state to false
-              }}
-            >
-              Generate Audio
-            </button>
-          )}
+      <div className="flex flex-col w-full h-screen max-w-md mx-auto p-4 overflow-y-auto">
+        <div className="flex-grow overflow-y-auto">
+          <div className="mb-4">
+            <Image
+              src={`data:image/jpeg;base64,${image}`}
+              width={500}
+              height={500}
+              alt="Generated image"
+              className="rounded-lg w-full"
+            />
+          </div>
+          <div className="w-full">
+            <textarea
+              className="w-full text-white bg-gray-400 p-3 rounded-lg h-64"
+              value={messages[messages.length - 1].content}
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col justify-center mb-2 items-center">
+            {audio && (
+              <>
+                <p> Listen to the recipe: </p>
+                <audio controls src={audio} className="w-full"></audio>
+              </>
+            )}
+            {audioIsLoading && !audio && <p> Audio is being generated... </p>}
+            {!audioIsLoading && !audio && (
+              <button
+                className="bg-blue-500 p-2 text-white rounded shadow-xl"
+                onClick={async () => {
+                  setAudioIsLoading(true); // change state to true
+                  const response = await fetch("/api/audio", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      message: messages[messages.length - 1].content,
+                    }),
+                  });
+                  const audioBlob = await response.blob();
+                  const audioUrl = URL.createObjectURL(audioBlob);
+                  setAudio(audioUrl);
+                  setAudioIsLoading(false); // change state to false
+                }}
+              >
+                Generate Audio
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
