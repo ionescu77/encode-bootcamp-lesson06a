@@ -27,8 +27,8 @@ export default function Chat() {
             key={m.id}
             className={`whitespace-pre-wrap ${
               m.role === "user"
-                ? "bg-green-700 p-3 m-2 rounded-lg"
-                : "bg-slate-700 p-3 m-2 rounded-lg"
+                ? "bg-green-600 p-3 m-2 rounded-lg"
+                : "bg-gray-400 p-3 m-2 rounded-lg"
             }`}
           >
             {m.role === "user" ? "User: " : "AI: "}
