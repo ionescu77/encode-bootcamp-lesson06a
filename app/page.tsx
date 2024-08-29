@@ -1,10 +1,11 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Chat() {
   const { messages, isLoading, append } = useChat();
+  const [imageIsLoading, setImageIsLoading] = useState(false); // new state to keep track of the image loading state
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -12,6 +13,21 @@ export default function Chat() {
         messagesContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // display the loading animation instead of the chat interface while the image is being generated
+  if (imageIsLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader">
+          <div className="animate-pulse flex space-x-4">
+            <div className="rounded-full bg-slate-700 h-10 w-10"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // display the chat interface
   return (
     <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
       <div className="overflow-auto w-full mb-8" ref={messagesContainerRef}>
@@ -51,6 +67,7 @@ export default function Chat() {
             className="bg-blue-500 p-2 text-white rounded shadow-xl"
             disabled={isLoading}
             onClick={async () => {
+              setImageIsLoading(true); // change state to true
               const response = await fetch("api/images", {
                 method: "POST",
                 headers: {
@@ -62,6 +79,7 @@ export default function Chat() {
               });
               const data = await response.json();
               console.log(data);
+              setImageIsLoading(false); // change state to false
             }}
           >
             Generate image
