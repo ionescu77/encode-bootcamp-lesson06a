@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Chat() {
   const { messages, isLoading, append } = useChat();
-  const [imageIsLoading, setImageIsLoading] = useState(false); // new state to keep track of the image loading state
+  const [imageIsLoading, setImageIsLoading] = useState(false); // state to keep track of the image loading
+  const [image, setImage] = useState<string | null>(null); // state to keep track of the image URL
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -23,6 +24,15 @@ export default function Chat() {
             <div className="rounded-full bg-slate-700 h-10 w-10"></div>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  // display the image instead of the chat interface when the image is ready
+  if (image) {
+    return (
+      <div className="flex justify-center gap-4 h-screen">
+        <img src={`data:image/jpeg;base64,${image}`} />
       </div>
     );
   }
@@ -78,7 +88,7 @@ export default function Chat() {
                 }),
               });
               const data = await response.json();
-              console.log(data);
+              setImage(data); // save the returned image data
               setImageIsLoading(false); // change state to false
             }}
           >
