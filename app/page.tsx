@@ -50,7 +50,19 @@ export default function Chat() {
           <button
             className="bg-blue-500 p-2 text-white rounded shadow-xl"
             disabled={isLoading}
-            onClick={() => {}}
+            onClick={async () => {
+              const response = await fetch("api/images", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  message: messages[messages.length - 1].content,
+                }),
+              });
+              const data = await response.json();
+              console.log(data);
+            }}
           >
             Generate image
           </button>
