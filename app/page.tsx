@@ -2,6 +2,7 @@
 
 import { useChat } from "ai/react";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function Chat() {
   const { messages, isLoading, append } = useChat();
@@ -33,8 +34,10 @@ export default function Chat() {
     return (
       <div className="flex flex-col w-full h-screen max-w-md py-24 mx-auto stretch overflow-hidden">
         <div className="mb-4">
-          <img
+          <Image
             src={`data:image/jpeg;base64,${image}`}
+            width={500}
+            height={500}
             alt="Generated image"
             className="rounded-lg w-full"
           />
