@@ -34,8 +34,8 @@ export default function Chat() {
           </div>
         )}
       </div>
-      <div className="fixed bottom-0 w-full max-w-md">
-        <div className="flex flex-col justify-center mb-2 items-center">
+      <div className="flex flex-col justify-center mb-2 items-center">
+        {messages.length == 0 && (
           <button
             className="bg-blue-500 p-2 text-white rounded shadow-xl"
             disabled={isLoading}
@@ -45,7 +45,16 @@ export default function Chat() {
           >
             Random Recipe
           </button>
-        </div>
+        )}
+        {messages.length == 2 && !isLoading && (
+          <button
+            className="bg-blue-500 p-2 text-white rounded shadow-xl"
+            disabled={isLoading}
+            onClick={() => {}}
+          >
+            Generate image
+          </button>
+        )}
       </div>
     </div>
   );
