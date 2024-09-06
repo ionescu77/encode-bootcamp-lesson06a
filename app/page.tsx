@@ -25,7 +25,7 @@ export default function Chat() {
       <div className="flex justify-center items-center h-screen">
         <div className="loader">
           <div className="animate-pulse flex space-x-4">
-            <div className="rounded-full bg-slate-700 h-10 w-10"></div>
+            <div className="rounded-full bg-muted h-10 w-10"></div>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function Chat() {
           </div>
           <div className="w-full">
             <textarea
-              className="w-full text-white bg-gray-400 p-3 rounded-lg h-64"
+              className="w-full bg-muted text-muted-foreground p-3 rounded-lg h-64"
               value={messages[messages.length - 1].content}
               readOnly
             />
@@ -63,7 +63,7 @@ export default function Chat() {
             {audioIsLoading && !audio && <p> Audio is being generated... </p>}
             {!audioIsLoading && !audio && (
               <button
-                className="bg-blue-500 p-2 text-white rounded shadow-xl"
+                className="flex justify-center mt-4"
                 onClick={async () => {
                   setAudioIsLoading(true); // change state to true
                   const response = await fetch("/api/audio", {
@@ -99,8 +99,8 @@ export default function Chat() {
             key={m.id}
             className={`whitespace-pre-wrap ${
               m.role === "user"
-                ? "bg-green-600 p-3 m-2 rounded-lg"
-                : "bg-gray-400 p-3 m-2 rounded-lg"
+                ? "bg-primary text-primary-foreground p-3 m-2 rounded-lg"
+                : "bg-muted text-muted-foreground p-3 m-2 rounded-lg"
             }`}
           >
             {m.role === "user" ? "User: " : "AI: "}
@@ -116,7 +116,7 @@ export default function Chat() {
       <div className="flex flex-col justify-center mb-2 items-center">
         {messages.length == 0 && (
           <button
-            className="bg-blue-500 p-2 text-white rounded shadow-xl"
+            className="flex justify-center mt-4"
             disabled={isLoading}
             onClick={() =>
               append({ role: "user", content: "Give me a random recipe" })
@@ -127,7 +127,7 @@ export default function Chat() {
         )}
         {messages.length == 2 && !isLoading && (
           <button
-            className="bg-blue-500 p-2 text-white rounded shadow-xl"
+            className="flex justify-center mt-4"
             disabled={isLoading}
             onClick={async () => {
               setImageIsLoading(true); // change state to true
